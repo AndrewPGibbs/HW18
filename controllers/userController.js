@@ -44,14 +44,22 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
-          : Application.deleteMany({ _id: { $in: user.applications } })
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then(() => res.json({ message: 'User and associated apps deleted!' }))
+      .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   //remove friend from friend list
   removeFriend() {
-    //findOneAndUpdate
+    User.findONeAndUpdate({_id: req.params.userId },
+      {$pull: {friends: req.params.friendId}},
+      {runValidators: true, new: true})
+    .then((user) =>
+    !user
+    ? res.status(404).json({ message: 'No user found matching that ID'})
+    : res.status(200).json(user)
+    )
+    .catch((err) => res.status(500).json(err));
     // use $pull
   }
 };
