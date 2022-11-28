@@ -1,4 +1,5 @@
 const { User, Application } = require('../models');
+const { unsubscribe } = require('../routes/api/thoughtRoutes');
 
 module.exports = {
   // Get all users
@@ -29,6 +30,11 @@ module.exports = {
   //update a user
   updateUser(req, res) {
     //findOneAndUpdate
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      {  runValidators: true, new: true }
+    )
   },
   // Delete a user and associated thoughts
 
