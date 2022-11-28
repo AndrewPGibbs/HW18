@@ -7,10 +7,12 @@ const {
   deleteApplication,
   addTag,
   removeTag,
-} = require('../../controllers/appController');
+} = require('../../controllers/thoughtController');
 
 // /api/applications
-router.route('/').get(getApplications).post(createApplication);
+router.route('/')
+.get(getApplications)
+.post(createApplication);
 
 // /api/applications/:applicationId
 router
@@ -20,9 +22,11 @@ router
   .delete(deleteApplication);
 
 // /api/applications/:applicationId/tags
-router.route('/:applicationId/tags').post(addTag);
+router.route('/:applicationId/tags')
+.post(addTag);
 
 // /api/applications/:applicationId/tags/:tagId
-router.route('/:applicationId/tags/:tagId').delete(removeTag);
+router.route('/:applicationId/tags/:tagId')
+.delete(removeTag);
 
 module.exports = router;
