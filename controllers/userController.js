@@ -1,5 +1,5 @@
-const { User, Application } = require('../models');
-const { unsubscribe } = require('../routes/api/thoughtRoutes');
+const { User, Thought } = require('../models');
+
 
 module.exports = {
   // Get all users
