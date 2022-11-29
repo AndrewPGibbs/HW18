@@ -26,10 +26,8 @@ router.route('/:userId')
 router.route('/:userId/friends')
 .post(addFriend);
 
+//route for deleting friends
+router.route('/:userId/friends/:friendId')
+.delete(removeFriend);
+
 module.exports = router;
-// in the controller folder there should be all the functions that will be imported into this file  (same as lines 3 through 5) 
-// functions needed are 
-// updateUser
-// deleteUser,
-// addFriend,
-// removeFriend
