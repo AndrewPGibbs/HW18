@@ -18,7 +18,13 @@ router.route('/')
 
 // /api/users/:userId
 router.route('/:userId')
-.get(getSingleUser);
+.get(getSingleUser)
+.put(updateUser)
+.delete(deleteUser);
+
+// /api/users/:userId/friends
+router.route('/:userId/friends')
+.post(addFriend);
 
 module.exports = router;
 // in the controller folder there should be all the functions that will be imported into this file  (same as lines 3 through 5) 
