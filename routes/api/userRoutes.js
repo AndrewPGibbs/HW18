@@ -3,8 +3,10 @@ const {
   getUsers,
   getSingleUser,
   createUser,
-  //deleteUser is here but I need to write a route for it.
+  updateUser,
   deleteUser,
+  removeFriend,
+  addFriend
 } = require('../../controllers/userController');
 
 
