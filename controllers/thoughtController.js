@@ -3,9 +3,16 @@ const {Thought , User} = require('../models');
 module.exports = {
   //get thoughts
   getThoughts(req, res) {
-    Thought.find()
-      .then((thoughts) => res.json(thoughts))
-      .catch((err) => res.status(500).json(err));
+    console.log(req.header)
+    Thought.find({})
+      .then((data) => {
+        console.log(data)
+        res.json(data)})
+      .catch((err) =>{
+        console.log(err)
+        res.status(500).json(err)
+      } 
+      );
   },
 // get single thought
   getSingleThought(req, res) {
@@ -21,19 +28,21 @@ module.exports = {
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
+        console.log(thought)
         return User.findOneAndUpdate(
-          { _id: req.body.userId },
+          { username: req.body.username },
           { $addToSet: { thoughts: thought._id } },
           { new: true }
         );
       })
-      .then((user) =>
+      .then((user,thought) =>{
+      console.log(user)
         !user
           ? res.status(404).json({
               message: 'Thought created, but found no user with that ID',
             })
-          : res.json('Created new Thought! 🎉')
-      )
+          : res.json(user.thoughts[user.thoughts.length -1])
+          })
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
@@ -41,6 +50,7 @@ module.exports = {
   },
   //update thought
   updateThought(req, res) {
+    console.log(req.params)
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },

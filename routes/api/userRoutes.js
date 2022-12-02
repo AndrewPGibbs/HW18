@@ -17,12 +17,13 @@ router.route('/')
 
 
 // /api/users/:userId
-router.route('/:userId')
+router
+.route('/:userId')
 .get(getSingleUser)
 .put(updateUser)
 .delete(deleteUser);
 
-// /api/users/:userId/friends
+// adding a friend
 router.route('/:userId/friends')
 .post(addFriend);
 

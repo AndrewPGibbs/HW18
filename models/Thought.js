@@ -1,24 +1,25 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-const dateFormat = require('../utils/dataFormat');
+// const { dateFormat } = require('../utils/dateFormat');
 
 // Schema to create Post model
 const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
-      minLength: 15,
-      maxLength: 500,
+      required: true,
+      maxLength: 280,
     },
     createdAt: {
       type: Date,
       default: Date.now,
+      // get: (date) => {return dateFormat(date)},
     },
     username: {
-      type: Boolean,
-      default: true,
+      type: String, 
+      required: true,
     },
-    reactions: [reactionSchema] //reference activity 17 and 18
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -28,10 +29,12 @@ const thoughtSchema = new Schema(
   }
 );
 
-//virtual for reaction count
+thoughtSchema.virtual('reactionCount').get(function () {
+  return this.reactions.length;
+})
 
 
-// Initialize our Application model
-const Thought = model('application', thoughtSchema);
+// Initialize our thought model
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;

@@ -1,5 +1,5 @@
 const { Schema, Types } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+// const dateFormat = require('../utils/dateFormat.js');
 
 const reactionSchema = new Schema(
   {
@@ -10,16 +10,17 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
-      maxlength: 25,
+      maxlength: 250,
+      default: 'Empty Re'
     },
     username: {
       type: String,
       required: true,
-      maxlength: 15,
     },
     createdAt: {
       type: Date,
       default: Date.now,
+      // get: (date) => dateFormat(date)
     },
   },
   {
@@ -29,5 +30,4 @@ const reactionSchema = new Schema(
     id: false,
   }
 );
-
 module.exports = reactionSchema;

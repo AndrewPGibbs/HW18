@@ -3,16 +3,31 @@ const { Schema, model } = require('mongoose');
 // Schema to create User model
 const userSchema = new Schema(
   {
-    username: {String, null: false},
-    email: {},
+    username: {
+      type: String,
+       null: false,
+       unique: true,
+       required: true,
+       max_length: 25,
+      
+      },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      max_length: 60,
+    },
     thoughts: [
       {
-        //AN ARRAY that references the thought objectId
+       type: Schema.Types.ObjectId,
+       ref: 'Thought',
       },
     ],
     friends:  [
       {
-    //references the user objectID
+    type: Schema.Types.ObjectId,
+    unique: false,
+    ref: 'User',
       },
     ],
   },
@@ -27,8 +42,11 @@ const userSchema = new Schema(
 );
 
 // the answer for creating a virtual for friendCount is in activity 21 and 23
-
+userSchema.virtual('friendCount')
+.get(function () {
+  return this.friends.length;
+})
 // Initialize our User model
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;
